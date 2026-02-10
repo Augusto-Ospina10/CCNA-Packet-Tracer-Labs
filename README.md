@@ -1,99 +1,69 @@
-# 🌐 Full-Stack Branch Connectivity Lab  
-**DHCP · Serial WAN · RIPv2**
+# Full-Stack Branch Connectivity Lab: DHCP, Serial WAN, & RIPv2
 
 ## 🎯 Project Objective
-The goal of this project was to design and implement a complete network infrastructure for two geographically separated branch offices. This lab demonstrates mastery of local network services (DHCP), hardware modularity (Serial WAN), and dynamic routing (RIPv2).
+The goal of this project was to design and implement a complete network infrastructure for two geographically separated branch offices. This lab demonstrates mastery over local network services (DHCP), hardware modularity (Serial), and dynamic routing (RIPv2).
 
 ---
 
 ## 🏗️ Implementation Phases
 
-### 🔹 Phase 1: LAN Foundation & Local Services
-Established stable local networks before integrating the WAN.
+### Phase 1: LAN Foundation & Local Services
+* **Gateway Setup:** Configured GigabitEthernet 0/0 interfaces as the exit point for the 192.168.1.0/24 and 192.168.2.0/24 networks.
+* **DHCP Configuration:** Configured routers as DHCP servers to automatically assign IP addresses and gateway info to all end-devices.
 
-- Configured `GigabitEthernet0/0` on Cisco 2911 routers as default gateways for:
-  - `192.168.1.0/24`
-  - `192.168.2.0/24`
-- Configured each router as a DHCP server to automatically assign:
-  - IP address
-  - Subnet mask
-  - Default gateway
-  - DNS server
-- Verified local connectivity using `ping`
+### Phase 2: WAN & Physical Interconnect
+* **Hardware:** Installed **HWIC-2T** serial cards into the Cisco 2911 chassis.
+* **Link Sync:** Applied a `clock rate 128000` on the **DCE** interface to synchronize bit-timing.
+* **Addressing:** Utilized a point-to-point **/30** subnet (10.0.0.0/30) for efficiency.
+
+### Phase 3: Dynamic Routing & Security
+* **Routing:** Implemented **RIPv2** with `no auto-summary` to allow specific subnet advertisement.
+* **Security:** Hardened the management plane using **MD5-encrypted** `enable secret` passwords.
 
 ---
 
-### 🔹 Phase 2: WAN & Physical Interconnect
-Connected the two branch offices using a serial point-to-point WAN link.
+## 🗺️ Topology Diagram
+![Network Topology](topology.png)
 
-- Installed **HWIC-2T** serial modules on Cisco 2911 routers
-- Identified the **DCE** interface using:
-  ```bash
-  show controllers serial
-Applied clocking on the DCE side:
+---
 
-clock rate 128000
-Configured a /30 subnet (10.0.0.0/30) to optimize IP usage
+## 🚀 Key Configurations (Combined CLI Snippet)
 
-🔹 Phase 3: Dynamic Routing & Security
-Enabled end-to-end communication and secured administrative access.
+Below is the consolidated configuration applied to the routers to achieve full connectivity:
 
-Implemented RIPv2 with classless routing:
+```bash
+! --- SECTION 1: LAN & DHCP SERVICES ---
+interface GigabitEthernet0/0
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
 
-no auto-summary
-Secured privileged EXEC mode using:
-
-enable secret
-🗺️ Network Topology
-
-
-🚀 Key Configurations & CLI Snippets
-📌 DHCP Configuration
-ip dhcp excluded-address 192.168.1.1 192.168.1.10
-
-ip dhcp pool BRANCH_1
+ip dhcp pool BRANCH_OFFICE
  network 192.168.1.0 255.255.255.0
  default-router 192.168.1.1
  dns-server 8.8.8.8
-ip dhcp excluded-address 192.168.2.1 192.168.2.10
 
-ip dhcp pool BRANCH_2
- network 192.168.2.0 255.255.255.0
- default-router 192.168.2.1
- dns-server 8.8.8.8
-📌 Serial WAN Configuration
+! --- SECTION 2: WAN INTERFACE (DCE) ---
 interface Serial0/3/0
  ip address 10.0.0.1 255.255.255.252
  clock rate 128000
  no shutdown
-interface Serial0/3/0
- ip address 10.0.0.2 255.255.255.252
- no shutdown
-📌 RIPv2 Configuration
+
+! --- SECTION 3: DYNAMIC ROUTING (RIPv2) ---
 router rip
  version 2
  no auto-summary
  network 10.0.0.0
  network 192.168.1.0
- network 192.168.2.0
-✅ Results
-DHCP successfully assigns IP configurations to LAN hosts
 
-Serial WAN link operational between branch routers
+! --- SECTION 4: DEVICE SECURITY ---
+enable secret MySecurePassword123
+🧪 Verification & Proof
+Routing Table: Verified the presence of "R" routes via show ip route.
 
-Dynamic routing enables full inter-branch communication
+Connectivity: 100% success rate on ICMP pings between branch hosts.
 
-Routers secured with encrypted privileged access
+Path Discovery: Confirmed the hop-by-hop path using tracert.
 
-🧠 Skills Demonstrated
-Cisco IOS CLI
+Author: Augusto Ospina
 
-DHCP server configuration
-
-Serial WAN setup (DCE/DTE)
-
-Subnetting (/24 and /30)
-
-Dynamic routing with RIPv2
-
-Network verification and troubleshooting
+Project: CCNA Lab Portfolio
