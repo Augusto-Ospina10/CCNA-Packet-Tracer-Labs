@@ -39,28 +39,13 @@ ip dhcp pool BRANCH_OFFICE
  network 192.168.x.0 255.255.255.0
  default-router 192.168.x.1
  dns-server 8.8.8.8
-2. Serial WAN Configuration (The Physical Link)
-Bash
-interface Serial0/3/0
- ip address 10.0.0.x 255.255.255.252
- clock rate 128000
- no shutdown
-3. RIPv2 Setup (The Logical Bridge)
-Bash
-router rip
- version 2
- no auto-summary
- network 10.0.0.0
- network 192.168.x.0
-🧪 Verification & Proof of Connectivity
-To prove the network is fully operational, I performed the following checks:
 
-Routing Table: Ran show ip route to verify the presence of "R" (RIP) routes for the remote network.
+## 🚀 Key Configurations & CLI Snippets
 
-End-to-End Ping: Successfully pinged from PC-0 (Branch A) to PC-1 (Branch B) with 0% packet loss.
+### 1. DHCP Pool Setup (Automating the LAN)
+```bash
+ip dhcp pool BRANCH_OFFICE
+ network 192.168.x.0 255.255.255.0
+ default-router 192.168.x.1
+ dns-server 8.8.8.8
 
-Traceroute: Executed tracert to confirm packets were taking the correct path across the WAN link.
-
-Author: Augusto Ospina
-
-Project: CCNA Lab Portfolio
