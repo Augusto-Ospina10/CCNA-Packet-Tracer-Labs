@@ -5,19 +5,19 @@ The goal of this project was to design and implement a complete network infrastr
 
 ---
 
-## 🏗️ Detailed Implementation Phases
+## 🏗️ Implementation Phases
 
 ### Phase 1: LAN Foundation & Local Services
 Established the local office "islands" to ensure host stability and automated addressing before WAN integration.
 * **Default Gateway Setup:** Configured GigabitEthernet 0/0 interfaces on Cisco 2911 routers to serve as the exit point for the 192.168.1.0/24 and 192.168.2.0/24 networks.
-* **DHCP Server Configuration:** Instead of static IPs, I configured each router as a DHCP server. I created pools to automatically hand out IP addresses, subnet masks, and default gateway information to all PCs.
+* **DHCP Server Configuration:** Instead of static IPs, I configured each router as a DHCP server to automatically assign IP addresses, subnet masks, and default gateway information to all PCs.
 * **Verification:** Tested local host-to-gateway connectivity to ensure the LAN was operational.
 
 ### Phase 2: WAN & Physical Interconnect
 Physically and logically bridged the two branch routers.
 * **Hardware Provisioning:** Installed **HWIC-2T** high-speed serial cards into the physical chassis of the Cisco 2911 routers.
 * **DCE/DTE Synchronization:** Identified the **DCE** end of the serial cable using the `show controllers` command and applied a `clock rate 128000` to synchronize bit-timing.
-* **WAN Subnetting:** Configured a point-to-point `/30` subnet (10.0.0.0/30) on the serial interfaces to maximize IP address efficiency.
+* **WAN Subnetting:** Configured a point-to-point **/30** subnet (10.0.0.0/30) on the serial interfaces to maximize IP address efficiency.
 
 ### Phase 3: Dynamic Routing & Security
 Enabled "End-to-End" communication and hardened the devices for administrative access.
@@ -39,14 +39,14 @@ ip dhcp pool BRANCH_OFFICE
  network 192.168.x.0 255.255.255.0
  default-router 192.168.x.1
  dns-server 8.8.8.8
-
-2. Serial & RIPv2 Setup (The WAN Bridge)
+2. Serial WAN Configuration (The Physical Link)
 Bash
 interface Serial0/3/0
  ip address 10.0.0.x 255.255.255.252
  clock rate 128000
  no shutdown
-
+3. RIPv2 Setup (The Logical Bridge)
+Bash
 router rip
  version 2
  no auto-summary
