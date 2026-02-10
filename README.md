@@ -52,3 +52,15 @@ router rip
  no auto-summary
  network 10.0.0.0
  network 192.168.x.0
+🧪 Verification & Proof of Connectivity
+To prove the network is fully operational, I performed the following checks:
+
+Routing Table: Ran show ip route to verify the presence of "R" (RIP) routes for the remote network.
+
+End-to-End Ping: Successfully pinged from PC-0 (Branch A) to PC-1 (Branch B) with 0% packet loss.
+
+Traceroute: Executed tracert to confirm packets were taking the correct path across the WAN link.
+
+Author: Augusto Ospina
+
+Project: CCNA Lab Portfolio
