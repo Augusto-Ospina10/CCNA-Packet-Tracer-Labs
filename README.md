@@ -23,7 +23,7 @@ The goal of this project was to design and implement a complete network infrastr
 ---
 
 ## 🗺️ Topology Diagram
-![Network Topology](Topology.png)
+![Network Topology](Topology.png.png)
 
 ---
 
