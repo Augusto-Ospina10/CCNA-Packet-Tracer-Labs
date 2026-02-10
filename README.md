@@ -23,7 +23,7 @@ The goal of this project was to design and implement a complete network infrastr
 ---
 
 ## 🗺️ Topology Diagram
-![Network Topology](topology.png)
+![Network Topology](Topology.png)
 
 ---
 
@@ -52,16 +52,3 @@ router rip
  no auto-summary
  network 10.0.0.0
  network 192.168.1.0
-
-! --- SECTION 4: DEVICE SECURITY ---
-enable secret MySecurePassword123
-🧪 Verification & Proof
-Routing Table: Verified the presence of "R" routes via show ip route.
-
-Connectivity: 100% success rate on ICMP pings between branch hosts.
-
-Path Discovery: Confirmed the hop-by-hop path using tracert.
-
-Author: Augusto Ospina
-
-Project: CCNA Lab Portfolio
