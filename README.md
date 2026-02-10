@@ -27,9 +27,7 @@ The goal of this project was to design and implement a complete network infrastr
 
 ---
 
-## 🚀 Key Configurations (Combined CLI Snippet)
-
-Below is the consolidated configuration applied to the routers to achieve full connectivity:
+## 🚀 Key Configurations (CLI Snippet)
 
 ```bash
 ! --- SECTION 1: LAN & DHCP SERVICES ---
